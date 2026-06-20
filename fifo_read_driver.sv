@@ -20,6 +20,8 @@ class fifo_read_driver extends uvm_driver #(fifo_txn);
   task run_phase(uvm_phase phase);
 
     fifo_txn req;
+    wait(vif.reset == 1);
+   repeat(2) @(posedge vif.rd_clk);
 
     forever begin
 

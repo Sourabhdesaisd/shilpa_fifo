@@ -61,7 +61,7 @@ endtask*/
 //bit first_read = 1;
 
 
-task run_phase(uvm_phase phase);
+/*task run_phase(uvm_phase phase);
 
    forever begin
 
@@ -84,6 +84,38 @@ task run_phase(uvm_phase phase);
       end
 
    end
+
+endtask*/
+task run_phase(uvm_phase phase);
+
+  bit pending_read;
+
+  pending_read = 0;
+
+  forever begin
+
+    @(posedge vif.rd_clk);
+
+    if(pending_read) begin
+
+      tx_1 = fifo_txn::type_id::create("tx_1");
+
+      tx_1.read_data = vif.read_data;
+
+      `uvm_info("RD_MON",
+                $sformatf("READ_DATA=%0h",
+                          tx_1.read_data),
+                UVM_LOW)
+
+      ap_port.write(tx_1);
+
+      pending_read = 0;
+    end
+
+    if(vif.rd_en && !vif.empty)
+      pending_read = 1;
+
+  end
 
 endtask
 
