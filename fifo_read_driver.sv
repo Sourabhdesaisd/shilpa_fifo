@@ -21,9 +21,6 @@ class fifo_read_driver extends uvm_driver #(fifo_txn);
 
     fifo_txn req;
 
-   wait(vif.reset == 1);
-    
-
     forever begin
 
       seq_item_port.get_next_item(req);
@@ -38,7 +35,7 @@ class fifo_read_driver extends uvm_driver #(fifo_txn);
             @(posedge vif.rd_clk);
 
 
-           // @(posedge vif.rd_clk);
+            //@(posedge vif.rd_clk);
 
 
           if(!vif.empty) begin

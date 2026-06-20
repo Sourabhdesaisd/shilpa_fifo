@@ -26,7 +26,7 @@ class fifo_write_monitor extends uvm_monitor;
 
   task run_phase(uvm_phase phase);
     forever begin
-     /* @(vif.wr_mon_cb);
+      @(vif.wr_mon_cb);
       begin
         tx_1 = fifo_txn::type_id::create("tx_1");
 
@@ -46,27 +46,7 @@ class fifo_write_monitor extends uvm_monitor;
 
   ap_port.write(tx_1);
 
-end */
-
-@(vif.wr_mon_cb);
-
-if(vif.wr_mon_cb.wr_en && !vif.wr_mon_cb.full) begin
-
-   @(vif.wr_mon_cb);
-
-   tx_1 = fifo_txn::type_id::create("tx_1");
-
-   tx_1.payload = new[1];
-   tx_1.payload[0] = vif.wr_mon_cb.write_data;
-
-   `uvm_info("WR_MON",
-             $sformatf("WRITE_DATA=%0h",
-                       tx_1.payload[0]),
-             UVM_LOW)
-
-   ap_port.write(tx_1);
-
-
+end
 
       end
     end

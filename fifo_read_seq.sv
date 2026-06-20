@@ -7,7 +7,7 @@ class fifo_read_seq extends fifo_base_seq;
   endfunction
 task body();
 
-#10
+
 
  repeat(1000) begin
 
