@@ -19,6 +19,10 @@ task run_phase(uvm_phase phase);
 
   fifo_txn req;
 
+  wait(vif.reset == 1);
+
+  repeat(2) @(posedge vif.wr_clk);
+
   forever begin
 
     seq_item_port.get_next_item(req);
